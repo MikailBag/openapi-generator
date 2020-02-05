@@ -1,22 +1,36 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+{{#appName}}
+{{{appName}}}
 
+{{/appName}}
+{{#appDescription}}
+{{{appDescription}}}
+
+{{/appDescription}}
+{{#version}}The version of the OpenAPI document: {{version}}{{/version}}
+{{#infoEmail}}Contact: {{{infoEmail}}}{{/infoEmail}}
+-->
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <TargetFramework>{{targetFramework}}</TargetFramework>
-    <AssemblyName>{{packageName}}</AssemblyName>
-    <PackageId>{{packageName}}</PackageId>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{{packageGuid}}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <Authors>{{packageAuthors}}</Authors>
-    <Company>{{packageCompany}}</Company>
-    <AssemblyTitle>{{packageTitle}}</AssemblyTitle>
-    <Description>{{packageDescription}}</Description>
-    <Copyright>{{packageCopyright}}</Copyright>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>{{packageName}}</RootNamespace>
-    <Version>{{packageVersion}}</Version>
+    <AssemblyName>{{packageName}}</AssemblyName>
+    <Description>{{packageDescription}}</Description>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFramework>{{targetFramework}}</TargetFramework>
+    <FileAlignment>512</FileAlignment>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\{{packageName}}.xml</DocumentationFile>{{#licenseId}}
     <PackageLicenseExpression>{{licenseId}}</PackageLicenseExpression>{{/licenseId}}
     <RepositoryUrl>https://{{{gitHost}}}/{{{gitUserId}}}/{{{gitRepoId}}}.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>{{#releaseNote}}
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://{{{gitHost}}}/{{{gitUserId}}}/{{{gitRepoId}}}</PackageProjectUrl>{{#releaseNote}}
     <PackageReleaseNotes>{{releaseNote}}</PackageReleaseNotes>{{/releaseNote}}{{#packageTags}}
     <PackageTags>{{{packageTags}}}</PackageTags>{{/packageTags}}
   </PropertyGroup>
@@ -32,5 +46,4 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
     {{/validatable}}
   </ItemGroup>
-
 </Project>
