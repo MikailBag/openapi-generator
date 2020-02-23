@@ -783,10 +783,17 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     continue;
                 }
 
-                File targetedFile = new File(outputFilename);
-                if (ignoreProcessor.allowsFile(targetedFile)) {
-                    if (targetedFile.exists() && !support.canOverwrite) {
-                        LOGGER.info("Skipped overwriting " + support.destinationFilename + " as the file already exists.");
+                if (ignoreProcessor.allowsFile(new File(outputFilename))) {
+                    // support.templateFile is the unmodified/original supporting file name (e.g. build.sh.mustache)
+                    // templatingEngine.templateExists dispatches resolution to this, performing template-engine specific inspect of support file extensions.
+                    if (templatingEngine.templateExists(this, support.templateFile)) {
+                        String templateContent = templatingEngine.compileTemplate(this, bundle, support.templateFile);
+                        writeToFile(outputFilename, templateContent);
+                        File written = new File(outputFilename);
+                        files.add(written);
+                        if (config.isEnablePostProcessFile()) {
+                            config.postProcessFile(written, "supporting-mustache");
+                        }
                     } else {
                         if (Arrays.stream(templatingEngine.getFileExtensions()).anyMatch(templateFile::endsWith)) {
                             String templateContent = templatingEngine.compileTemplate(this, bundle, support.templateFile);
